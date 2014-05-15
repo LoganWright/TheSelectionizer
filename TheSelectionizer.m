@@ -23,11 +23,11 @@
     }
     else {
         if (charRange.location < _lastRange.location) {
-            // NSLog(@"Selecting LEFT");
+            NSLog(@"Mouse is currently selecting LEFT");
             _mouseSelectionDirection = MouseSelectionDirectionLeft;
         }
         else {
-            // NSLog(@"Selecting RIGHT");
+            NSLog(@"Mouse is currently selecting RIGHT");
             _mouseSelectionDirection = MouseSelectionDirectionRight;
         }
     }

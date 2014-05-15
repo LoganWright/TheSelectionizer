@@ -34,7 +34,9 @@
         int difference = (int)(newSelectedCharRange.length - oldSelectedCharRange.length);
         if (difference < 0) difference *= -1;
         if (difference == 1) {
-            // 1 means that a Keyboard arrow triggered the selection
+            // 1 means that a Keyboard arrow  (left or right) triggered the selection
+            // ... most of the time. If nothing is selected and the mouse selects 1
+            // character, this side will trigger. Perhaps add a toggle?
             if (oldSelectedCharRange.location == newSelectedCharRange.location) {
                 NSLog(@"Right Selection");
                 if (oldSelectedCharRange.length < newSelectedCharRange.length) {
