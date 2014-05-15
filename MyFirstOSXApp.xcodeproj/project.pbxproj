@@ -18,6 +18,7 @@
 		80BFA03919248D56008FB171 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80BFA01819248D55008FB171 /* Cocoa.framework */; };
 		80BFA04119248D56008FB171 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 80BFA03F19248D56008FB171 /* InfoPlist.strings */; };
 		80BFA04319248D56008FB171 /* MyFirstOSXAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 80BFA04219248D56008FB171 /* MyFirstOSXAppTests.m */; };
+		80BFA0541924A983008FB171 /* TheSelectionizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 80BFA0531924A983008FB171 /* TheSelectionizer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +51,8 @@
 		80BFA03E19248D56008FB171 /* MyFirstOSXAppTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MyFirstOSXAppTests-Info.plist"; sourceTree = "<group>"; };
 		80BFA04019248D56008FB171 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		80BFA04219248D56008FB171 /* MyFirstOSXAppTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MyFirstOSXAppTests.m; sourceTree = "<group>"; };
+		80BFA0521924A983008FB171 /* TheSelectionizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TheSelectionizer.h; path = ../TheSelectionizer.h; sourceTree = "<group>"; };
+		80BFA0531924A983008FB171 /* TheSelectionizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TheSelectionizer.m; path = ../TheSelectionizer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -115,6 +118,8 @@
 		80BFA01E19248D55008FB171 /* MyFirstOSXApp */ = {
 			isa = PBXGroup;
 			children = (
+				80BFA0521924A983008FB171 /* TheSelectionizer.h */,
+				80BFA0531924A983008FB171 /* TheSelectionizer.m */,
 				80BFA02A19248D55008FB171 /* AppDelegate.h */,
 				80BFA02B19248D55008FB171 /* AppDelegate.m */,
 				80BFA02D19248D56008FB171 /* MainMenu.xib */,
@@ -253,6 +258,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				80BFA02C19248D55008FB171 /* AppDelegate.m in Sources */,
+				80BFA0541924A983008FB171 /* TheSelectionizer.m in Sources */,
 				80BFA02519248D55008FB171 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
