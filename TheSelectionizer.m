@@ -8,30 +8,13 @@
 
 #import "TheSelectionizer.h"
 
-@interface TheSelectionizer ()
-
-@property (nonatomic) NSRange lastRange;
-
-@end
-
 @implementation TheSelectionizer
 
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag {
     
     if (charRange.length == 0) {
-        _lastRange = charRange;
+        _lastAnchorPoint = charRange;
     }
-    else {
-        if (charRange.location < _lastRange.location) {
-            NSLog(@"Mouse is currently selecting LEFT");
-            _mouseSelectionDirection = MouseSelectionDirectionLeft;
-        }
-        else {
-            NSLog(@"Mouse is currently selecting RIGHT");
-            _mouseSelectionDirection = MouseSelectionDirectionRight;
-        }
-    }
-    
     [super setSelectedRange:charRange affinity:affinity stillSelecting:stillSelectingFlag];
 }
 

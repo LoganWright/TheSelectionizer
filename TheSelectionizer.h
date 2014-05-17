@@ -8,13 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
-typedef NS_ENUM(NSInteger, MouseSelectionDirection) {
-    MouseSelectionDirectionRight,
-    MouseSelectionDirectionLeft
-};
 
 @interface TheSelectionizer : NSTextView
 
-@property (nonatomic) MouseSelectionDirection mouseSelectionDirection;
+@property (nonatomic) NSRange lastAnchorPoint;
 
 @end
+
+
+// If you select by mouse, the first direction arrowed sets the opposite end as the anchor
