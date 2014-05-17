@@ -56,21 +56,21 @@
         if (anchorStart == selectionStart) {
             if (oldSelectedCharRange.length < newSelectedCharRange.length) {
                 // Bigger
-                NSLog(@"Will arrow right in overall right selection");
+                NSLog(@"Will select right in overall right selection");
             }
             else {
                 // Smaller
-                NSLog(@"Will arrow left in overall right selection");
+                NSLog(@"Will select left in overall right selection");
             }
         }
         else {
             if (oldSelectedCharRange.length < newSelectedCharRange.length) {
                 // Bigger
-                NSLog(@"Will arrow left in overall left selection");
+                NSLog(@"Will select left in overall left selection");
             }
             else {
                 // Smaller
-                NSLog(@"Will arrow right in overall left selection");
+                NSLog(@"Will select right in overall left selection");
             }
         }
     }
