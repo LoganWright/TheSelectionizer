@@ -13,14 +13,9 @@ In Subclass.h
 ```ObjC
 #import <Cocoa/Cocoa.h>
 
-typedef NS_ENUM(NSInteger, MouseSelectionDirection) {
-    MouseSelectionDirectionRight,
-    MouseSelectionDirectionLeft
-};
-
 @interface TheSelectionizer : NSTextView
 
-@property (nonatomic) MouseSelectionDirection mouseSelectionDirection;
+@property (nonatomic) NSRange lastAnchorPoint;
 
 @end
 
@@ -31,30 +26,11 @@ In Subclass.m
 ```ObjC
 #import "TheSelectionizer.h"
 
-@interface TheSelectionizer ()
-
-@property (nonatomic) NSRange lastRange;
-
-@end
-
-@implementation TheSelectionizer
-
 - (void)setSelectedRange:(NSRange)charRange affinity:(NSSelectionAffinity)affinity stillSelecting:(BOOL)stillSelectingFlag {
-    
+
     if (charRange.length == 0) {
-        _lastRange = charRange;
+        _lastAnchorPoint = charRange;
     }
-    else {
-        if (charRange.location < _lastRange.location) {
-            // NSLog(@"Selecting LEFT");
-            _mouseSelectionDirection = MouseSelectionDirectionLeft;
-        }
-        else {
-            // NSLog(@"Selecting RIGHT");
-            _mouseSelectionDirection = MouseSelectionDirectionRight;
-        }
-    }
-    
     [super setSelectedRange:charRange affinity:affinity stillSelecting:stillSelectingFlag];
 }
 
@@ -67,47 +43,54 @@ Make sure you have set up your delegate to conform to `NSTextViewDelegateProtoco
 
 ```ObjC
 - (NSRange) textView:(NSTextView *)textView willChangeSelectionFromCharacterRange:(NSRange)oldSelectedCharRange toCharacterRange:(NSRange)newSelectedCharRange {
-    
-    // If our new range is 0, we're not selecting anything
+
     if (newSelectedCharRange.length != 0) {
-        
-        int difference = (int)(newSelectedCharRange.length - oldSelectedCharRange.length);
-        if (difference < 0) difference *= -1;
-        if (difference == 1) {
-            // 1 means that a Keyboard arrow triggered the selection
+
+        TheSelectionizer * selectionizer = (TheSelectionizer *)textView;
+
+        int anchorStart = (int)selectionizer.lastAnchorPoint.location;
+        int selectionStart = (int)newSelectedCharRange.location;
+        int selectionLength = (int)newSelectedCharRange.length;
+
+        /*
+         If mouse selects left, and then a user arrows right, or the opposite, anchor point flips.
+         */
+        int difference = anchorStart - selectionStart;
+        if (difference > 0 && difference != selectionLength) {
             if (oldSelectedCharRange.location == newSelectedCharRange.location) {
-                NSLog(@"Right Selection");
-                if (oldSelectedCharRange.length < newSelectedCharRange.length) {
-                    NSLog(@"Will arrow right in overall right selection");
-                }
-                else {
-                    NSLog(@"Will arrow left in overall right selection");
-                }
+                // We were selecting left via mouse, but now we are selecting to the right via arrows
+                anchorStart = selectionStart;
             }
             else {
-                NSLog(@"Left Selection");
-                if (oldSelectedCharRange.length < newSelectedCharRange.length) {
-                    NSLog(@"Will arrow left in overall left selection");
-                }
-                else {
-                    NSLog(@"Will arrow right in overall left selection");
-                }
+                // We were selecting right via mouse, but now we are selecting to the left via arrows
+                anchorStart = selectionStart + selectionLength;
+            }
+            selectionizer.lastAnchorPoint = NSMakeRange(anchorStart, 0);
+        }
+
+        // Evaluate Selection Direction
+        if (anchorStart == selectionStart) {
+            if (oldSelectedCharRange.length < newSelectedCharRange.length) {
+                // Bigger
+                NSLog(@"Will select right in overall right selection");
+            }
+            else {
+                // Smaller
+                NSLog(@"Will select left in overall right selection");
             }
         }
         else {
-            // Selection was triggered by mouse
-            // ...
-            NSLog(@"Mouse done selecting");
-            TheSelectionizer * selectionizer = (TheSelectionizer *)textView;
-            if (selectionizer.mouseSelectionDirection == MouseSelectionDirectionLeft) {
-                NSLog(@"Mouse finished selecting left");
+            if (oldSelectedCharRange.length < newSelectedCharRange.length) {
+                // Bigger
+                NSLog(@"Will select left in overall left selection");
             }
-            else if (selectionizer.mouseSelectionDirection == MouseSelectionDirectionRight) {
-                NSLog(@"Mouse finished selecting right");
+            else {
+                // Smaller
+                NSLog(@"Will select right in overall left selection");
             }
         }
     }
-    
+
     return newSelectedCharRange;
 }
 ```
